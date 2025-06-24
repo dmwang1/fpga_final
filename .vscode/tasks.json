@@ -1,0 +1,46 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "FPGA: Full Build",
+            "type": "shell",
+            "command": "C:\\Xilinx\\2025.1\\Vivado\\bin\\vivado.bat",
+            "args": ["-mode", "batch", "-source", "build.tcl"],
+            "options": {
+                "cwd": "${workspaceFolder}/scripts"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "FPGA: Synthesis Only",
+            "type": "shell",
+            "command": "C:\\Xilinx\\2025.1\\Vivado\\bin\\vivado.bat",
+            "args": ["-mode", "batch", "-source", "synth_only.tcl"],
+            "options": {
+                "cwd": "${workspaceFolder}/scripts"
+            },
+            "group": "build"
+        },
+        {
+            "label": "FPGA: Program Device",
+            "type": "shell",
+            "command": "C:\\Xilinx\\2025.1\\Vivado\\bin\\vivado.bat",
+            "args": ["-mode", "batch", "-source", "program.tcl"],
+            "options": {
+                "cwd": "${workspaceFolder}/scripts"
+            }
+        }
+    ]
+}

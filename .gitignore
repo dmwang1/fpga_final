@@ -1,0 +1,41 @@
+﻿# Vivado generated files
+*.jou
+*.log
+*.str
+*.xpr.bak
+vivado.jou
+vivado.log
+*.cache/
+*.hw/
+*.ip_user_files/
+*.runs/
+*.sim/
+*.srcs/sources_1/ip/*/
+*.gen/
+*.hbs
+*.dcp
+*.bit
+*.ltx
+*.rpt
+*.xml
+*.tmp
+*.debug
+*.wdb
+*.wcfg
+
+# Output directory
+output/
+
+# OS files
+Thumbs.db
+.DS_Store
+*.tmp
+*~
+
+# Keep these files
+!*.xdc
+!*.v
+!*.vhd
+!*.sv
+!*.tcl
+!*.md
