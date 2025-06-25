@@ -64,6 +64,7 @@ get_pins -of_objects [get_ports led*]
 
 & "C:\Xilinx\2025.1\Vivado\bin\vivado.bat" -mode batch -source simulate.tcl
 
+ssh -X dwang@100.93.4.75
 
 
 

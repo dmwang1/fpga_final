@@ -4,10 +4,10 @@
 <!-- Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.                   -->
 <!-- Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.   -->
 
-<Project Product="Vivado" Version="7" Minor="70" Path="C:/Users/dwang/Documents/fpga_dev/my_arty_project/sim_terminal/sim_project_terminal.xpr">
+<Project Product="Vivado" Version="7" Minor="70" Path="C:/Users/dwang/Documents/fpga_dev/my_arty_project/sim_auto/sim_auto.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
-    <Option Name="Id" Val="93461bd1a07b49de9909852ff9f4661a"/>
+    <Option Name="Id" Val="e86e9e78a9ba4e44946c69b48d4282e6"/>
     <Option Name="Part" Val="xc7a100tcsg324-1"/>
     <Option Name="CompiledLibDir" Val="$PCACHEDIR/compile_simlib"/>
     <Option Name="CompiledLibDirXSim" Val=""/>
@@ -47,7 +47,6 @@
     <Option Name="ActiveSimSet" Val="sim_1"/>
     <Option Name="DefaultLib" Val="xil_defaultlib"/>
     <Option Name="ProjectType" Val="Default"/>
-    <Option Name="IPOutputRepo" Val="$PCACHEDIR/ip"/>
     <Option Name="IPDefaultOutputPath" Val="$PGENDIR/sources_1"/>
     <Option Name="IPCachePermission" Val="read"/>
     <Option Name="IPCachePermission" Val="write"/>
@@ -96,9 +95,15 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
+      <File Path="$PPRDIR/../src/hdl/data_acq_top.sv">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
       <Config>
         <Option Name="DesignMode" Val="RTL"/>
-        <Option Name="TopModule" Val="top"/>
         <Option Name="TopAutoSet" Val="TRUE"/>
       </Config>
     </FileSet>
