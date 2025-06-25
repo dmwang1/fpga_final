@@ -66,6 +66,14 @@ get_pins -of_objects [get_ports led*]
 
 ssh -X dwang@100.93.4.75
 
+# wave process from rpi:
+
+vivado -mode batch -source simulate_with_vcd.tcl
+scp "C:/Users/dwang/Documents/fpga_dev/my_arty_project/output/waves.vcd" tripod@100.81.165.41:/home/tripod/Desktop/
+# On RPi4
+cd ~/Desktop
+gtkwave waves.vcd
+
 
 
 
