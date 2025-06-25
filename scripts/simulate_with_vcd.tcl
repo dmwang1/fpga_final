@@ -1,4 +1,3 @@
-# Clean simulation script with proper VCD generation
 catch {close_sim -quiet}
 catch {close_project -quiet}
 
@@ -15,21 +14,29 @@ if {![file exists ../output]} {
     file mkdir ../output
 }
 
+# Get testbench name from command line
+if {$argc >= 1} {
+    set testbench [lindex $argv 0]
+} else {
+    set testbench "tb_top"  
+}
+
 # Create simulation project
 create_project -force sim_vcd_project $sim_dir -part xc7a100tcsg324-1
 
-# Add source files to the project
-add_files -fileset sources_1 [glob ../src/hdl/*.v]
-add_files -fileset sim_1 [glob ../src/testbench/*.v]
+# Add source files to the project and CHANGE V OR SV AS NEEDED
+# add_files -fileset sources_1 [glob ../src/hdl/*.v]
+add_files -fileset sources_1 [glob ../src/hdl/*.sv]
+add_files -fileset sim_1 [glob ../src/testbench/*.sv]
 
-# Set simulation properties
-set_property top tb_top [get_filesets sim_1]
+# Set simulation properties (FIXED: Use variable instead of hardcoded)
+set_property top $testbench [get_filesets sim_1]
 set_property top_lib xil_defaultlib [get_filesets sim_1]
 
 # Update compile order
 update_compile_order -fileset sim_1
 
-puts "Launching simulation..."
+puts "Launching simulation for testbench: $testbench"
 launch_simulation
 
 puts "Starting VCD capture from clean state..."
@@ -42,7 +49,8 @@ set vcd_path [file normalize "../output/waves.vcd"]
 puts "VCD file will be saved to: $vcd_path"
 
 open_vcd $vcd_path
-log_vcd [get_objects -recursive /tb_top/*]
+# FIXED: Use variable instead of hardcoded path
+log_vcd [get_objects -recursive /$testbench/*]
 
 puts "Running simulation for 1000ns..."
 run 1000ns

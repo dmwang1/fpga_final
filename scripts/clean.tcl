@@ -1,4 +1,4 @@
-# Clean script for data acquisition project
+# Enhanced clean script for FPGA project
 puts "Cleaning project files..."
 
 # Remove output directory
@@ -7,27 +7,12 @@ if {[file exists ../output]} {
     file delete -force ../output
 }
 
-# Remove simulation directories
-if {[file exists ../sim/work]} {
-    puts "Removing simulation work directory..."
-    file delete -force ../sim/work
-}
-
-if {[file exists ../sim_terminal]} {
-    puts "Removing terminal simulation directory..."
-    file delete -force ../sim_terminal
-}
-
-if {[file exists ../sim]} {
-    # Remove simulation generated files but keep source
-    foreach pattern {transcript vsim.wlf modelsim.ini *.vstf *.wdb *.wcfg} {
-        set files [glob -nocomplain ../sim/$pattern]
-        foreach file $files {
-            if {[file exists $file]} {
-                puts "Removing $file"
-                file delete -force $file
-            }
-        }
+# Remove ALL simulation project directories (ENHANCED)
+set sim_dirs {../sim_auto ../sim_gtk ../sim_vcd ../sim_terminal ../sim}
+foreach sim_dir $sim_dirs {
+    if {[file exists $sim_dir]} {
+        puts "Removing simulation directory: $sim_dir"
+        file delete -force $sim_dir
     }
 }
 
@@ -37,8 +22,9 @@ if {[file exists .Xil]} {
     file delete -force .Xil
 }
 
-# Remove individual generated files in scripts (skip files in use)
-foreach file {clockInfo.txt dfx_runtime.txt} {
+# Remove individual generated files in scripts
+set cleanup_files {clockInfo.txt dfx_runtime.txt xelab.pb}
+foreach file $cleanup_files {
     if {[file exists $file]} {
         puts "Removing $file"
         file delete -force $file
@@ -46,7 +32,8 @@ foreach file {clockInfo.txt dfx_runtime.txt} {
 }
 
 # Try to remove log files (may fail if Vivado is using them - that's OK)
-foreach file {vivado.jou vivado.log} {
+set log_files {vivado.jou vivado.log}
+foreach file $log_files {
     if {[file exists $file]} {
         puts "Attempting to remove $file"
         if {[catch {file delete -force $file} error]} {
@@ -65,12 +52,34 @@ foreach file $checkpoint_files {
 }
 
 # Remove any log files in project root
-set log_files [glob -nocomplain ../*.log]
-foreach file $log_files {
+set log_files_root [glob -nocomplain ../*.log]
+foreach file $log_files_root {
     puts "Removing log: $file"
+    file delete -force $file
+}
+
+# Remove any journal files in project root (ADDED)
+set jou_files [glob -nocomplain ../*.jou]
+foreach file $jou_files {
+    puts "Removing journal: $file"
+    file delete -force $file
+}
+
+# Clean up any VCD files that might be left in root (ADDED)
+set vcd_files [glob -nocomplain ../*.vcd]
+foreach file $vcd_files {
+    puts "Removing VCD file: $file"
     file delete -force $file
 }
 
 puts "Clean complete!"
 puts "All generated files have been removed."
 puts "Source files and constraints are preserved."
+puts ""
+puts "Directories cleaned:"
+puts "  - output/"
+puts "  - sim_*/ (all simulation projects)"
+puts "  - .Xil/"
+puts "Files cleaned:"
+puts "  - *.log, *.jou, *.dcp, *.vcd"
+puts "  - dfx_runtime.txt, xelab.pb"

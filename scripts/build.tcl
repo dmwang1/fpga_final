@@ -1,9 +1,9 @@
 # Non-project mode build script for my_arty_project
 set_param general.maxThreads 8
 
-# Set part
+# Set part, if want to run different module, change top
 set part "xc7a100tcsg324-1"
-set top_module "top"
+set top_module "top_clkgen"   
 
 # Clean any previous run
 if {[file exists ../output]} {
@@ -11,9 +11,11 @@ if {[file exists ../output]} {
 }
 file mkdir ../output
 
-# Read source files
+# Read source files .... comment either v or sv 
 puts "Reading source files..."
-read_verilog [glob ../src/hdl/*.v]
+# add_files [glob ../src/hdl/*.v]
+add_files [glob ../src/hdl/*.sv]
+
 read_xdc [glob ../src/constraints/*.xdc]
 
 # Set top module

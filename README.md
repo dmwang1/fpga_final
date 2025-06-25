@@ -16,7 +16,6 @@ FPGA project for Arty A7-100T board using Vivado non-project mode workflow.
 
 ## Command Line Usage
 
-`ash
 cd scripts
 
 # Full build (synthesis + implementation + bitstream)
@@ -41,14 +40,36 @@ vivado -mode batch -source program.tcl
 ## Files
 
 - **Top Module**: $TopModule.v
-- **Constraints**: rty_a7.xdc 
+- **Constraints**: arty_a7.xdc 
 - **Target Device**: xc7a100tcsg324-1
 
 Built with Vivado non-project mode for clean version control.
 
+# clean command in scripts dir
+vivado -mode batch -source clean.tcl
+
+# SYN COMMANDS
+# Check default module (top)
+vivado -mode batch -source synth_only.tcl
+
+# Check specific module  
+vivado -mode batch -source synth_only.tcl -tclargs top_clkgen
+vivado -mode batch -source synth_only.tcl -tclargs clk_gen
+
+
+# PROGRAM COMMANDS (replace end of line with module name)
+vivado -mode batch -source program.tcl -tclargs top_clkgen  
+
+
+
 
 ## in vscode terminal working
 & "C:\Xilinx\2025.1\Vivado\bin\vivado.bat" -mode batch -source build.tcl
+
+or
+
+vivado -mode batch -source build.tcl -tclargs clk_gen
+vivado -mode batch -source build.tcl -tclargs top
 
 & "C:\Xilinx\2025.1\Vivado\bin\vivado.bat" -mode batch -source program.tcl
 
@@ -75,12 +96,40 @@ cd ~/Desktop
 gtkwave waves.vcd
 
 
+scp "C:/Users/dwang/Documents/fpga_dev/my_arty_project/output/waves.vcd" tripod@100.81.165.41:/home/tripod/Desktop/
 
 
-Solution 4: Simplified Approach
+vivado -mode batch -source simulate_with_vcd.tcl -tclargs tb_clkgen
+vivado -mode batch -source simulate_with_vcd.tcl -tclargs tb_top
+
+
+
+# Solution 4: Simplified Approach
 Since your GUI simulation works, just open Vivado GUI and run:
 powershell# Open Vivado GUI, then in Tcl Console:
 & "C:\Xilinx\2025.1\Vivado\bin\vivado.bat" -mode gui
 Then in GUI Tcl Console:
 tclcd C:/Users/dwang/Documents/fpga_dev/my_arty_project/scripts
 source simulate_terminal.tcl
+
+
+# vivado -mode batch -source simulate_with_vcd.tcl -tclargs <testbench_name>
+ex: vivado -mode batch -source simulate_with_vcd.tcl -tclargs tb_top
+
+
+
+
+
+# 1. Test logic first
+vivado -mode batch -source simulate_with_vcd.tcl -tclargs tb_clkgen
+
+After sim, run scp command to view waves on rpi
+
+# 2. Quick syntax/timing check (30 seconds)
+vivado -mode batch -source synth_only.tcl -tclargs top_clkgen
+
+# 3. If synthesis passes, do full build (2-3 minutes)
+vivado -mode batch -source build.tcl -tclargs top_clkgen
+
+# 4. Program and test on hardware
+vivado -mode batch -source program.tcl -tclargs top_clkgen
