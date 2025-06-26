@@ -132,4 +132,4 @@ vivado -mode batch -source synth_only.tcl -tclargs top_clkgen
 vivado -mode batch -source build.tcl -tclargs top_clkgen
 
 # 4. Program and test on hardware
-vivado -mode batch -source program.tcl -tclargs top_clkgen
+
