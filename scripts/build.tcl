@@ -11,6 +11,10 @@ if {[file exists ../output]} {
 }
 file mkdir ../output
 
+read_ip [glob -nocomplain ../src/ip/*/*.xci]
+upgrade_ip [get_ips]
+generate_target all [get_ips]
+
 # Read source files .... comment either v or sv 
 puts "Reading source files..."
 # add_files [glob ../src/hdl/*.v]
