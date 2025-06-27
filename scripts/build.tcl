@@ -1,9 +1,15 @@
 # Non-project mode build script for my_arty_project
 set_param general.maxThreads 8
 
-# Set part, if want to run different module, change top
+# Set part and top module
 set part "xc7a100tcsg324-1"
-set top_module "top_clkgen"   
+
+# Get top module from command line argument
+if {$argc >= 1} {
+    set top_module [lindex $argv 0]
+} else {
+    set top_module "top_clkgen"  # Default fallback
+}   
 
 # Clean any previous run
 if {[file exists ../output]} {
@@ -11,9 +17,10 @@ if {[file exists ../output]} {
 }
 file mkdir ../output
 
-read_ip [glob -nocomplain ../src/ip/*/*.xci]
-upgrade_ip [get_ips]
-generate_target all [get_ips]
+# IP files (comment out if no IP used)
+# read_ip [glob -nocomplain ../src/ip/*/*.xci]
+# upgrade_ip [get_ips]
+# generate_target all [get_ips]
 
 # Read source files .... comment either v or sv 
 puts "Reading source files..."

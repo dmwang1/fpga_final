@@ -5,7 +5,7 @@
 if {$argc >= 1} {
     set top_module [lindex $argv 0]
 } else {
-    set top_module "top"  # default
+    set top_module "top"  
 }
 
 set bitstream_file "../output/${top_module}.bit"

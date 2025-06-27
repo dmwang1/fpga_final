@@ -1,24 +1,35 @@
 `timescale 1ns / 1ps
 
+// Ultra-slow approach - back to basics
 module top_clkgen (
-    input clk,      // From constraint file
-    input rst_n,    // From constraint file  
-    input [3:0] sw, // From constraint file
-    output [3:0] led // From constraint file
+    input clk,              // 100MHz system clock (matches your constraints)
+    input rst_n,            // Reset button (active low, matches your constraints)
+    input [3:0] sw,         // 4 slide switches (matches your constraints)
+    output [3:0] led        // 4 User LEDs (matches your constraints)
 );
 
-    wire clk_sys, clk_fast, locked;
+    // MASSIVE counter for ultra-slow blinking
+    reg [31:0] counter = 0;
+    reg [3:0] blink_pattern = 0;
     
-    // Instantiate your clock generator
-    clk_gen clk_inst (
-        .clk_in(clk),
-        .reset_in(~rst_n),  // Convert active-low to active-high
-        .clk_sys(clk_sys),
-        .clk_fast(clk_fast),
-        .locked(locked)
-    );
+    // Count to 400 million = 4 seconds at 100MHz
+    parameter COUNT_4SEC = 400_000_000;
     
-    // Show status on LEDs
-    assign led = {locked, clk_fast, clk_sys, clk};
+    always @(posedge clk) begin
+        if (!rst_n) begin
+            counter <= 0;
+            blink_pattern <= 0;
+        end else begin
+            if (counter >= (COUNT_4SEC - 1)) begin
+                counter <= 0;
+                blink_pattern <= blink_pattern + 1;  // Change every 4 seconds
+            end else begin
+                counter <= counter + 1;
+            end
+        end
+    end
+    
+    // Show the pattern - should change every 4 seconds
+    assign led = blink_pattern;
 
 endmodule

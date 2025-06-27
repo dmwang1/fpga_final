@@ -133,3 +133,8 @@ vivado -mode batch -source build.tcl -tclargs top_clkgen
 
 # 4. Program and test on hardware
 
+
+# vnc/gui use from rpi
+ssh -L 5900:100.93.4.75:5900 windows-desktop
+vncviewer localhost:5900
+
