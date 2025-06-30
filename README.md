@@ -50,7 +50,7 @@ Built with Vivado non-project mode for clean version control.
 
 # PUSH TOKEN COMMAND
 
-git push https://dmwang:token/dmwang1/fpga_final.git
+
 
 
 # clean command in scripts dir

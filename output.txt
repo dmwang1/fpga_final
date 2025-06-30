@@ -174,7 +174,7 @@ vivado -mode batch -source program.tcl
 
 Built with Vivado non-project mode for clean version control.
 
-# PUSH TOKEN COMMAND
+
 
 
 
