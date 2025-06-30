@@ -43,6 +43,7 @@ vivado -mode batch -source program.tcl
 - **Constraints**: arty_a7.xdc 
 - **Target Device**: xc7a100tcsg324-1
 
+
 # git2text:
 git2text . -o output.txt
 
