@@ -43,7 +43,15 @@ vivado -mode batch -source program.tcl
 - **Constraints**: arty_a7.xdc 
 - **Target Device**: xc7a100tcsg324-1
 
+# git2text:
+git2text . -o output.txt
+
 Built with Vivado non-project mode for clean version control.
+
+# PUSH TOKEN COMMAND
+
+git push https://dmwang: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@github.com/dmwang1/fpga_final.git
+
 
 # clean command in scripts dir
 vivado -mode batch -source clean.tcl
@@ -60,6 +68,8 @@ vivado -mode batch -source synth_only.tcl -tclargs clk_gen
 # PROGRAM COMMANDS (replace end of line with module name)
 vivado -mode batch -source program.tcl -tclargs top_clkgen  
 
+# sim waves command for vivado gui
+export_simulation  -directory "C:/Users/dwang/AppData/Roaming/Xilinx/Vivado/." -simulator xsim 
 
 
 
